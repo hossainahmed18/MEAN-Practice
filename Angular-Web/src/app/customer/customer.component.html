@@ -15,7 +15,7 @@
         
         <div *ngIf="formSubmitted && (customerForm.controls.name.errors?.required || customerForm.controls.email.errors?.required || customerForm.controls.phoneNumber.errors?.required )"
             class="text-danger mt-1">
-            Selecteer een ventilatiesysteem
+            Incomplete form
         </div>
 
         <button type="submit" class="btn btn-primary  mt-2">Submit</button>
