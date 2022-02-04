@@ -1,14 +1,33 @@
-<ul class="list-group">
-    <li class="list-group-item">
-        <h4>One</h4>
-        <h6>1</h6>
-    </li>
-    <li class="list-group-item">
-        <h4>two</h4>
-        <h6>2</h6>
-    </li>
-    <li class="list-group-item">
-        <h4>three</h4>
-        <h6>3</h6>
-    </li>
-  </ul>
+<div class="mt-5 w-50">
+    <form>
+        <div class="form-group mt-2">
+            <label>Email</label>
+            <input type="email" class="form-control">
+        </div>
+        <div class="form-group mt-2">
+            <label>name</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group mt-2">
+            <label>phoneNumber</label>
+            <input type="text" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary  mt-2">Submit</button>
+    </form>
+</div>
+
+<div class="w-50 mt-5">
+    <div *ngIf="loadingCustomers == 1" class="d-flex justify-content-center pb-5" style="margin-top: 200px;">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <div class="card" *ngFor="let item of customers">
+        <div class="card-body">
+            <h6>{{item.name}}</h6>
+            <h6>{{item.email}}</h6>
+            <h6>{{item.phoneNumber}}</h6>
+        </div>
+    </div>
+    
+</div>
