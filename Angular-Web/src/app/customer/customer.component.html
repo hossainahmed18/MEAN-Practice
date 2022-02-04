@@ -1,16 +1,16 @@
 <div class="mt-5 w-50">
-    <form>
+    <form [formGroup]="customerForm" (ngSubmit)="submitCustomerForm()">
         <div class="form-group mt-2">
             <label>Email</label>
-            <input type="email" class="form-control">
+            <input type="email" class="form-control" name="email" formControlName="email">
         </div>
         <div class="form-group mt-2">
-            <label>name</label>
-            <input type="text" class="form-control">
+            <label>Name</label>
+            <input type="text" class="form-control" name="name" formControlName="name">
         </div>
         <div class="form-group mt-2">
-            <label>phoneNumber</label>
-            <input type="text" class="form-control">
+            <label>Phone Number</label>
+            <input type="text" class="form-control" name="phoneNumber" formControlName="phoneNumber">
         </div>
         <button type="submit" class="btn btn-primary  mt-2">Submit</button>
     </form>
@@ -22,12 +22,32 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <div class="card" *ngFor="let item of customers">
-        <div class="card-body">
-            <h6>{{item.name}}</h6>
-            <h6>{{item.email}}</h6>
-            <h6>{{item.phoneNumber}}</h6>
+    <div class="row" *ngFor="let item of customers">
+        <div class="col-10">
+            <div class="card" >
+                <div class="card-body">
+                    <h6>{{item.name}}</h6>
+                    <h6>{{item.email}}</h6>
+                    <h6>{{item.phoneNumber}}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 d-flex align-items-center">
+           <i style="cursor: pointer;" class="fa fa-edit"></i> 
+           <i style="margin-left: 20%;cursor: pointer;" class="fa fa-trash" (click)="setForDelete()"></i>
         </div>
     </div>
-    
 </div>
+
+<app-modal [id]="customerDeleteWarning">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title">Are you sure to delete</h5>
+			<button type="button" class="btn-close"  (click)="closeModal()"></button>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-danger">Delete</button>
+			<button class="btn btn-primary" (click)="closeModal()">Cancel</button>
+		</div>
+	</div>
+</app-modal>
