@@ -1,4 +1,4 @@
-<div class="mt-5 w-50">
+<div class="mt-5 w-50" *ngIf="saveMode!=0">
     <form [formGroup]="customerForm" (ngSubmit)="submitCustomerForm()">
         <div class="form-group mt-2">
             <label>Email</label>
@@ -12,16 +12,24 @@
             <label>Phone Number</label>
             <input type="text" class="form-control" name="phoneNumber" formControlName="phoneNumber">
         </div>
+        
+        <div *ngIf="formSubmitted && (customerForm.controls.name.errors?.required || customerForm.controls.email.errors?.required || customerForm.controls.phoneNumber.errors?.required )"
+            class="text-danger mt-1">
+            Selecteer een ventilatiesysteem
+        </div>
+
         <button type="submit" class="btn btn-primary  mt-2">Submit</button>
     </form>
 </div>
 
 <div class="w-50 mt-5">
-    <div *ngIf="loadingCustomers == 1" class="d-flex justify-content-center pb-5" style="margin-top: 200px;">
+    
+    <div *ngIf="apiCalling == 1" class="d-flex justify-content-center pb-5" style="margin-top: 200px;">
         <div class="spinner-grow text-primary" role="status">
             <span class="sr-only">Loading...</span>
         </div>
     </div>
+    <div class="text-center"> <i style="cursor: pointer;" class="fa fa-plus" (click)="setForSave()"></i> </div>
     <div class="row" *ngFor="let item of customers">
         <div class="col-10">
             <div class="card" >
@@ -33,8 +41,8 @@
             </div>
         </div>
         <div class="col-2 d-flex align-items-center">
-           <i style="cursor: pointer;" class="fa fa-edit"></i> 
-           <i style="margin-left: 20%;cursor: pointer;" class="fa fa-trash" (click)="setForDelete()"></i>
+           <i style="cursor: pointer;" class="fa fa-edit" (click)="setForEdit(item)"></i> 
+           <i style="margin-left: 20%;cursor: pointer;" class="fa fa-trash" (click)="setForDelete(item.email)"></i>
         </div>
     </div>
 </div>
