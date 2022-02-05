@@ -42,7 +42,7 @@ export class CustomerComponent implements OnInit {
     this.apiCalling =1;
     if(this.saveMode == 1){
       this.apiService.saveCustomer(customerData).subscribe((data: Customer) => {
-        this.customers = this.customers.splice(0, 0, data);
+        this.customers.splice(0, 0, data);
         this.apiCalling = 2;
         this.resetForm();
         this.saveMode = 0;
@@ -51,7 +51,7 @@ export class CustomerComponent implements OnInit {
     }else if(this.saveMode == 2){
       this.apiService.updateCustomer(customerData).subscribe((data: Customer) => {
         this.customers = this.customers.filter(c => c.email != customerData.email);
-        this.customers = this.customers.splice(0, 0, data);
+        this.customers.splice(0, 0, data);
         this.apiCalling = 2;
         this.resetForm();
         this.saveMode = 0;
@@ -74,6 +74,7 @@ export class CustomerComponent implements OnInit {
     this.modalService.open(this.customerDeleteWarning);
   }
   closeModal() {
+    this.deleteEmail = '';
     this.modalService.close(this.customerDeleteWarning);
   }
   deleteRequest() {
@@ -82,6 +83,7 @@ export class CustomerComponent implements OnInit {
       this.customers = this.customers.filter(c => c.email != this.deleteEmail);
       this.deleteEmail = '';
       this.apiCalling =2;
+      this.closeModal()
     })
   }
 
@@ -95,6 +97,7 @@ export class CustomerComponent implements OnInit {
   }
   setForSave() {
     this.saveMode = 1;
+    this.resetForm();
   }
 
   resetForm() {
