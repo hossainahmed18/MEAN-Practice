@@ -1,4 +1,4 @@
-<div class="mt-5 w-50" *ngIf="saveMode!=0">
+<div class="mt-5 w-50" *ngIf="isStatic == false && saveMode!=0">
     <form [formGroup]="customerForm" (ngSubmit)="submitCustomerForm()">
         <div class="form-group mt-2">
             <label>Email</label>
@@ -12,18 +12,23 @@
             <label>Phone Number</label>
             <input type="text" class="form-control" name="phoneNumber" formControlName="phoneNumber">
         </div>
-        
+        <div class="form-group mt-2">
+            <label>Image</label>
+            <input type="file" class="form-control" (change)="onChangeFile($event)">
+        </div>
+        <div *ngIf="customerForm.controls.imageBase64String.value.length > 0" class="form-group mt-2">
+            <img [src]="customerForm.controls.imageBase64String.value" width="100px" height="100px" alt="" />
+        </div>
         <div *ngIf="formSubmitted && (customerForm.controls.name.errors?.required || customerForm.controls.email.errors?.required || customerForm.controls.phoneNumber.errors?.required )"
             class="text-danger mt-1">
             Incomplete form
         </div>
-
         <button type="submit" class="btn btn-primary  mt-2">Submit</button>
     </form>
 </div>
 
 <div class="w-50 mt-5">
-    
+
     <div *ngIf="apiCalling == 1" class="d-flex justify-content-center pb-5" style="margin-top: 200px;">
         <div class="spinner-grow text-primary" role="status">
             <span class="sr-only">Loading...</span>
@@ -32,30 +37,41 @@
     <div class="text-center"> <i style="cursor: pointer;" class="fa fa-plus" (click)="setForSave()"></i> </div>
     <div class="row" *ngFor="let item of customers">
         <div class="col-10">
-            <div class="card" >
+            <div class="card">
+
                 <div class="card-body">
-                    <h6>{{item.name}}</h6>
-                    <h6>{{item.email}}</h6>
-                    <h6>{{item.phoneNumber}}</h6>
+                    <div class="row">
+                        <div class="col-7">
+                            <h6>{{item.name}}</h6>
+                            <h6>{{item.email}}</h6>
+                            <h6>{{item.phoneNumber}}</h6>
+                        </div>
+                        <div class="col-5">
+                            <div *ngIf="item.imageBase64String.length > 0" class="form-group mt-2">
+                                <img [src]="item.imageBase64String" width="100px" height="100px" alt="" />
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <div class="col-2 d-flex align-items-center">
-           <i style="cursor: pointer;" class="fa fa-edit" (click)="setForEdit(item)"></i> 
-           <i style="margin-left: 20%;cursor: pointer;" class="fa fa-trash" (click)="setForDelete(item.email)"></i>
+        <div class="col-2 d-flex align-items-center" *ngIf="!isStatic">
+            <i style="cursor: pointer;" class="fa fa-edit" (click)="setForEdit(item)"></i>
+            <i style="margin-left: 20%;cursor: pointer;" class="fa fa-trash" (click)="setForDelete(item.email)"></i>
         </div>
     </div>
 </div>
 
 <app-modal [id]="customerDeleteWarning">
-	<div class="modal-content">
-		<div class="modal-header">
-			<h5 class="modal-title">Are you sure to delete</h5>
-			<button type="button" class="btn-close"  (click)="closeModal()"></button>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-danger" (click)="deleteRequest()">Delete</button>
-			<button class="btn btn-primary" (click)="closeModal()">Cancel</button>
-		</div>
-	</div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Are you sure to delete</h5>
+            <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" (click)="deleteRequest()">Delete</button>
+            <button class="btn btn-primary" (click)="closeModal()">Cancel</button>
+        </div>
+    </div>
 </app-modal>

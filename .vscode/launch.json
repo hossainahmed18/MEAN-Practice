@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Launch Program",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\Express-Api\\src\\routes\\customer.js",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "name": "Run Current File",
+            "request": "launch",
+            "program": "${workspaceFolder}\\Express-Api\\src\\routes\\customer.js"
+        }
+    ]
+}

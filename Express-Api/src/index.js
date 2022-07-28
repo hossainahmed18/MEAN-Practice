@@ -5,7 +5,7 @@ var cors = require('cors');
 app.use(cors());
 
 let bodyParser = require('body-parser');
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit:'50mb'}));
 
 let customer = require('./routes/customer');
 app.use(customer);

@@ -6,7 +6,11 @@ const routes: Routes = [
   {
     path: 'customer',
     component: CustomerComponent
-  }
+  },
+  {
+    path: 'customer/:id',
+    component: CustomerComponent,
+  },
 ];
 
 @NgModule({
